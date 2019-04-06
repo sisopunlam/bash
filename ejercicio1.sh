@@ -4,7 +4,7 @@
 clear
 #Las respuestas a la parte teorica
 #a)¿Qué significa la linea '#!/bin/bash'?
-#"La primera linea '#!/bin/bash' se denomina she bang y es para indicar 
+#"La primera linea '#!/bin/bash' se denomina shebang y es para indicarle 
 #a la terminal que interprete debe utilizar para interpretar lo que sigue. 
 #En este caso, indica que 'lo que sigue' se tiene que leer con BASH"
 
