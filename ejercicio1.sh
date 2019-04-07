@@ -20,6 +20,10 @@ clear
 #e) ¿Es posible ejecutar este script para procesar varios archivos a la vez en una única llamada? Ejemplifique
 #Saludando.
 echo "Hola $USER! Ahora el script va a resolver el Ejercicio 1 del Trabajo Practico de BASH"
-
+#Para agregar la opción de ayuda en los comandos (ver fuente en la descripción del commit)
+if [ ${#@} -ne 0 ] && [ "${@#"--help"}" = "" ]; then #Primero probar y agregar las otras opciones (-h, -?, -help)
+  printf -- '...help...\n'; #Modificar
+  exit 0;
+fi;
 #Para avisar que devuelvo el control del sistema
 echo "¡Gracias por esperar, ahora, te devuelvo el control!"
