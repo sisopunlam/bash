@@ -26,14 +26,20 @@ clear
 #(?)
 #Saludando y tomando el control del sistema.
 echo "Hola $USER! Ejecutando el Ejercicio 1 del TP de BASH"
+#Este 'if' comprueba que el script recibe 2 argumentos, de otra manera, no se ejecuta
 if [ $# != 2 ]; then
-  echo "..."
+  echo "El Script necesita 2 argumentos.
+  Por favor, intentalo nuevamente"
   exit
 fi
+#Este 'if' lo que hace es comprobar que el segundo archivo (archivo fuente) es un archivo normal y
+#no es un archivo especial (unidades de disco) o carpetas
 if ! [ -f "$2" ]; then
-  echo "..."
+  echo "Por favor: Este script solo funciona con archivos regulares.
+  Por favor, intentalo nuevamente."
   exit
 fi
+#$1 es el modificador de AWK que busco
 X=$1
 
 awk 'BEGIN {
