@@ -4,7 +4,7 @@
 clear
 #Las respuestas a la parte teorica
 #a)¿Qué significa la linea '#!/bin/bash'?
-#"La primera linea '#!/bin/bash' se denomina shebang y es para indicarle 
+#"La primera linea '#!/bin/bash' se denomina 'shebang' y es para indicarle 
 #a la terminal que interprete debe utilizar para interpretar lo que sigue. 
 #En este caso, indica que 'lo que sigue' se tiene que leer con BASH"
 
@@ -17,13 +17,33 @@ clear
 #c)Explique el objetivo general del script
 #(Explicar)
 
+#d)Explique de manera general la utilidad de AWK
+#AWK es un editor de flujo capaz de leer archivos que contenga strings en su interior, detectar patrones
+#y tomar acciones especiales sobre estos. Se basa en el uso de reglas (los patrones a buscar) y cada regla tiene
+#una acción asociada.
+
 #e) ¿Es posible ejecutar este script para procesar varios archivos a la vez en una única llamada? Ejemplifique
-#Saludando.
-echo "Hola $USER! Ahora el script va a resolver el Ejercicio 1 del Trabajo Practico de BASH"
-#Para agregar la opción de ayuda en los comandos (ver fuente en la descripción del commit)
-if [ ${#@} -ne 0 ] && [ "${@#"--help"}" = "" ]; then #Primero probar y agregar las otras opciones (-h, -?, -help)
-  printf -- '...help...\n'; #Modificar
-  exit 0;
-fi;
+#(?)
+#Saludando y tomando el control del sistema.
+echo "Hola $USER! Ejecutando el Ejercicio 1 del TP de BASH"
+if [ $# != 2 ]; then
+  echo "..."
+  exit
+fi
+if ! [ -f "$2" ]; then
+  echo "..."
+  exit
+fi
+X=$1
+
+awk 'BEGIN {
+       FIELDWIDTHS = "11 30"
+}
+$1 == "'$X'" {
+         print "Nombre                         CUIT"
+         print "------------------------------ ------------"
+         print $2" "$1
+         exit
+ }' $2
 #Para avisar que devuelvo el control del sistema
 echo "¡Gracias por esperar, ahora, te devuelvo el control!"
