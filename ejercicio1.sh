@@ -33,7 +33,7 @@ if [ $# != 2 ]; then
   Por favor, intentalo nuevamente"
   exit
 fi
-#Este 'if' lo que hace es comprobar que el segundo archivo (archivo fuente) es un archivo normal y
+#Este 'if' lo que hace es comprobar que el segundo argumento (archivo fuente) es un archivo normal y
 #no es un archivo especial (unidades de disco) o carpetas
 if ! [ -f "$2" ]; then
   echo "Por favor: Este script solo funciona con archivos regulares.
