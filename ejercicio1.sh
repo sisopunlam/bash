@@ -23,7 +23,8 @@ clear
 #una acción asociada.
 
 #e) ¿Es posible ejecutar este script para procesar varios archivos a la vez en una única llamada? Ejemplifique
-#(?)
+#Sí, es posible, gracias que, al final del script para awk ("}' $2") me permite concadenar más de un archivo en la misma llamada
+#Ejemplo:
 #Saludando y tomando el control del sistema.
 echo "Hola $USER! Ejecutando el Ejercicio 1 del TP de BASH"
 #Este 'if' comprueba que el script recibe 2 argumentos, de otra manera, no se ejecuta
