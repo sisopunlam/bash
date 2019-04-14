@@ -15,7 +15,8 @@ clear
 #el script y, tanto el grupo al que pertenece el owner como otros usuarios tienen permisos de leer/ejecutar el script (r-x)
 
 #c)Explique el objetivo general del script
-#(Explicar)
+#El objetivo general del script es, a partir de un archivo de texto, el filtrado de datos buscando por CUIT
+#(en este caso particular)
 
 #d)Explique de manera general la utilidad de AWK
 #AWK es un editor de flujo capaz de leer archivos que contenga strings en su interior, detectar patrones
@@ -23,8 +24,7 @@ clear
 #una acción asociada.
 
 #e) ¿Es posible ejecutar este script para procesar varios archivos a la vez en una única llamada? Ejemplifique
-#Sí, es posible, gracias que, al final del script para awk ("}' $2") me permite concadenar más de un archivo en la misma llamada
-#Ejemplo:
+#?
 #Saludando y tomando el control del sistema.
 echo "Hola $USER! Ejecutando el Ejercicio 1 del TP de BASH"
 #Este 'if' comprueba que el script recibe 2 argumentos, de otra manera, no se ejecuta
@@ -41,12 +41,12 @@ if ! [ -f "$2" ]; then
   exit
 fi
 #$1 es el modificador de AWK que busco
-X=$1
+CUIT=$1
 
 awk 'BEGIN {
        FIELDWIDTHS = "11 30"
 }
-$1 == "'$X'" {
+$1 == "'$CUIT'" {
          print "Nombre                         CUIT"
          print "------------------------------ ------------"
          print $2" "$1
