@@ -1,10 +1,4 @@
 #!/bin/bash
-#Los errores van a /dev/null
-#Limpiando la pantalla
-clear
-
-#Saludando y tomando el control del sistema.
-echo "Hola $USER! Ejecutando el Ejercicio 1 del TP de BASH"
 #Este 'if' comprueba que el script recibe 2 argumentos, de otra manera, no se ejecuta
 if [ $# != 2 ]; then
   echo "El Script necesita 2 argumentos.
@@ -30,8 +24,6 @@ $1 == "'$CUIT'" {
          print $2" "$1
          exit
  }' $2
-#Para avisar que devuelvo el control del sistema
-echo "¡Gracias por esperar, ahora, te devuelvo el control!"
 #Las respuestas a la parte teorica
 #a)¿Qué significa la linea '#!/bin/bash'?
 #La primera linea '#!/bin/bash' se denomina 'shebang' y es para indicarle 
@@ -54,4 +46,10 @@ echo "¡Gracias por esperar, ahora, te devuelvo el control!"
 #una acción asociada.
 
 #e) ¿Es posible ejecutar este script para procesar varios archivos a la vez en una única llamada? Ejemplifique
-#(?)
+#En este caso particular, no es posible realizar más de una llamada a la vez de AWK, ya que, al analizar el código
+#en la linea (Refiriendonos a la linea 26 del código, si hubiera sido archivo_especifico.txt solo hubiera procesado ese archivo 
+#(si existiese)).
+#Para poder procesar multiples archivos, uno podria separar el script en 2:
+#En un archivo (preferentemente .awk para poderlo identificar mejor) las lineas 18 a 26 (propias del AWK)
+#En un archivo separado (.sh) un script en donde guarde un array de archivos a procesar y tenga un loop
+#que, por cada elemento (archivo), vaya realizando una llamada al script .awk creado (una solución elegante)
