@@ -1,70 +1,95 @@
 #!/bin/bash
-if test $# -gt 2;
+if test $# -gt 3;
 then
-	echo "HAY MAS DE 2 PARAMETROS"
+	echo "Hay mas de 3 parametros"
+	echo "Por favor ingresa -h para consultar la ayuda"
 	exit 0
 fi
 
-if [ "$1" == "-h" ] && [ $# == 1 ]; then
-	echo "Argumentos del script: <(-c,-d,-n)> <File>"
-	echo "-c) Filtra por Cuit"
-	echo "-d) Filtra por Dni"
-	echo "-n) Filtra por Nombre"
-	exit
+if  [ "$1" == "-h" ] && [ $# == 1 ] ; then
+	echo  	"A partir de un archivo de texto, este script filtra por CUIT, DNI y Nombre"
+	echo	 "Argumentos del script: <(-c,-d,-n)> <File> <(CUIT,DNI,NOMBRE)>"
+	echo	"-c) Filtra por Cuit"
+	echo 	"-d) Filtra por Dni"
+	echo 	"-n) Filtra por Nombre"
+echo "Si usted invoca <File> o <(-c,-d,-n> <File> ,se mostrara en detalle toda la informacion contenida en el archivo"
+	exit 0
 
 fi
 
-if [ ! -f "$2" ]; then
+if [ -f "$1" ] && [ $# == 1 ]; then
+	awk 'BEGIN {
+	FIELDWIDTHS = " 11 30 2 2 2  1 1 2"
+	print "CUIT\t	DENOMINACION\t\t\tGAN\tIVA\tMON\tINT\tEMP\tACT.MON"
+	print "-----------\t------------------------------\t---\t---\t---\t--\t---\t-------"
+	}
+	{
+	print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8	 
+	}
+	END { print "La cantidad de elementos filtrados es: "NR} ' $1
+exit 0
+fi
 
-	echo "NO ES UN FILE"
+if [ $# == 1 ]; then
+	echo "Tiene un solo argumento"
+	echo "Por favor, ingresa -h para consultar la ayuda"
 	exit
 fi
 
-if [ $# != 2 ]; then
-	echo "TIENE UN SOLO ARGUMENTO"
-	exit
-fi
-
-if [ "$1" == "-c" ]; then
+if [ "$1" == "-c" ] && [ $# == 3 ]; then
 
 	#echo FILTRO POR CUIT
-	awk 'BEGIN { 
-		FIELDWIDTHS = "11"
-	}
-{
-	print "CUIT"
-	print $1
-	print "----"
-
-}' $2
-exit
+	awk -v cuit=$3  ' BEGIN {
+		print "CUIT\t	DENOMINACION\t\t\tGAN\tIVA\tMON\tINT\tEMP\tACT.MON"
+		print "-----------\t------------------------------\t\t---\t---\t--\t---\t-------"
+		FIELDWIDTHS = " 11 30 2 2 2  1 1 2"
+		resultados  = 0		
+		}		
+		$1~cuit { 
+		print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8
+		resultados++
+		} 
+ 	END { print "La cantidad de elementos filtrados es\t"resultados}' $2
+exit 0
 fi
 
 
-if [ "$1" == "-d" ]; then
- 
+if [ "$1" == "-d" ] && [ $# == 3 ]; then
+
 	#echo FILTRO POR DNI
-	awk 'BEGIN { 
-		FIELDWIDTHS = "1 9"
+	awk -v dni=$3 ' BEGIN {
+	print "DNI\t	DENOMINACION\t\t\tGAN\tIVA\tMON\tINT\tEMP\tACT.MON"
+	print "-----------\t------------------------------\t\t---\t---\t--\t---\t-------"
+	FIELDWIDTHS = " 11 30 2 2 2  1 1 2"
+	resultados = 0
 	}
-	{	print "DNI"	
-		print $2
-		print "---"
-	} ' $2
+	substr($1,3,10)~dni {
+	print substr($1,3,10)"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8
+	resultados++
+	} 
+END  { print "La cantidad de elementos filtrados es:\t"resultados}' $2
 exit
 fi
 
 if [ "$1" == "-n" ]; then
  
 	#echo FILTRO POR NOMBRE
-	awk 'BEGIN {
-	FIELDWIDTHS = "11 30"
+	awk -v nombre=$3 ' BEGIN {
+	FIELDWIDTHS = " 11 30 2 2 2  1 1 2"
+	print "CUIT\t	DENOMINACION\t\t\tGAN\tIVA\tMON\tINT\tEMP\tACT.MON"
+	print "-----------\t------------------------------\t\t---\t---\t--\t---\t-------"
+	resultados=0
 	}
-	 {
-	print "Nombre"
-	print $2
-	print "------"
+	$2~toupper(nombre) {
+	print $1"\t"$2"\t"$3"\t"$4"\t"$5"\t"$6"\t"$7"\t"$8
+	resultados++
+	} 
 	
-}' $2
+END { print "La cantidad de elementos filtrados es: "resultados} ' $2
 	exit
+fi
+
+if [ "$1" != "-c" ] || [ "$1" != "-n" ] || [ "$1" != "-d" ]; then
+echo "Parametro no valido, por favor ingresa -h para consultar la ayuda"
+exit 
 fi
