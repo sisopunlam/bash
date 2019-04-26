@@ -59,56 +59,57 @@ nroCarton=0
 bingo=0
 declare -a numSalidos			#Esto habria que reemplazarlo por le trap sigusr1
 let "numS*=0"
-if test numS -eq 0; then
-let "numSalidos[$numS] = $(expr $RANDOM %99)"
+if [ $numS	-eq	0 ];	then
+numSalidos[$numS]=$(expr $RANDOM %99)
 let "numS+=1"
 echo ${numSalidos[$numS]}
 else
 let "bolilla=$(expr $RANDOM %99)"
-while [(contiene ${numSalidos[@]} $bolilla) -eq 0] ; do #mientras este en el array de numSalidos lo sigo generando
+while ["contiene ${numSalidos[@]} $bolilla" -eq 0] ; do #mientras este en el array de numSalidos lo sigo generando
 let "bolilla=$(expr $RANDOM %99)"
 done #cuando salga quiere decir que es un numero nuevo
 fi
 
-while(bingo==0){
+while [ $bingo -eq 0 ]; do
 j=16
 i=16							#Me va a contar los -1 para saber si es bingo
 
-while(carton -lt cantCartones)	{
+while [ $carton -le $cantCartones ] ; do
 aux=$i
 
-while(i<(aux+16)){
+while [ $i -lt $($aux+16) ]; do
 			nroCarton=${VARIABLE[$I]}
 			let"i+=1"
-				if((bolilla==${VARIABLE[$I]))
-				VARIABLE[$i]=-1
-				fi			
+			if [ $bolilla -eq ${VARIABLE[$I]} ]; then
+				let "VARIABLE[$i]=-1"
+				fi
 let"i+=1"
-					}
+					done
 
 			let "carton+=1"
-									}
+done # fin del while[ $carton -lt $cantCartones ] ; do
 aux2=$j
 carton=0
 cartonGanador=0
 k=0
 esBingo=0
-while(carton -lt cantCartones)	{
-	while(j<(aux2+16)){
-			nroCarton=${VARIABLE[$I]}
+while [ $carton -le $cantCartones ] ; do
+
+while [ $j -lt $($aux2+16) ]; do
+			nroCarton=${VARIABLE[$j]}
 			let"j+=1"
-				if((${VARIABLE[$I]==-1))
+				if[ ${VARIABLE[$j] -eq -1]; then
 					let "esBingo+=1"
 				fi
-			let"i+=1"
-					}
-			if((esBingo==15))
+			let"j+=1"
+
+			if [ $esBingo -eq 15 ]; then
 				cartonGanador[$k]=$nroCarton
 				let "k+=1"
 			fi
 			let "carton+=1"
 			esBingo=0
-									}
+	done
 carton=${#cartonGanador[@]} #Esto solo ve si hay bingo, no controla linea
 if((carton>0))
 bingo=1
@@ -118,27 +119,4 @@ echo "Carton Ganador"
 echo ${cartonGanador[$l]}
 done
 fi
-
-					}
-
-}
-<#
----------------------------------
-declare -A numSalidos
-$num=0
-$bolilla=0
-$bingo=0
-$bolilla=$((1+RANDOM%99))
-if((num == 0)
-numSalidos[num]=$bolilla
-let "num+=1"
-echo $bolilla
-else
-while [ $(contiene "${numSalidos[@]}" bolilla) ==0 ]; do #mientras este en el array de numSalidos lo sigo generando
-$bolilla=$((1+RANDOM%99))
-done #cuando salga quiere decir que es un numero nuevo
-numSalidos[$num] = $bolilla
-let "num +=1"
-echo $bolilla
-fi
-#>
+done	#while del bingo
