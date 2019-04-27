@@ -29,6 +29,7 @@ fi
 return 1
 }
 #------------------------------
+
 OLDIFS=$IFS   # Valor original del IFS
 A=-1          # Variable para moverse por el array
 texto=$1
@@ -49,7 +50,7 @@ if [ $A -ge 0 ] ; then
     echo "VARIABLE[$B] = ${VARIABLE[$B]}"
   done
 fi
-
+RANDOM=$$
 cantCartones=${#VARIABLE[@]}
 let "cantCartones/=16"
 let "cantCartones-=1" 
@@ -60,13 +61,13 @@ bingo=0
 declare -a numSalidos			#Esto habria que reemplazarlo por le trap sigusr1
 let "numS*=0"
 if [ $numS	-eq	0 ];	then
-numSalidos[$numS]=$(expr $RANDOM %99)
+numSalidos[$numS]=$(expr $RANDOM%99)
 let "numS+=1"
 echo ${numSalidos[$numS]}
 else
-let "bolilla=$(expr $RANDOM %99)"
+let "bolilla=$(expr $RANDOM%99)"
 while ["contiene ${numSalidos[@]} $bolilla" -eq 0] ; do #mientras este en el array de numSalidos lo sigo generando
-let "bolilla=$(expr $RANDOM %99)"
+let "bolilla=$(expr $RANDOM%99)"
 done #cuando salga quiere decir que es un numero nuevo
 fi
 
@@ -98,7 +99,7 @@ while [ $carton -le $cantCartones ] ; do
 while [ $j -lt $($aux2+16) ]; do
 			nroCarton=${VARIABLE[$j]}
 			let"j+=1"
-				if[ ${VARIABLE[$j] -eq -1]; then
+				if [ ${VARIABLE[$j]} -eq -1]; then
 					let "esBingo+=1"
 				fi
 			let"j+=1"
@@ -111,7 +112,7 @@ while [ $j -lt $($aux2+16) ]; do
 			esBingo=0
 	done
 carton=${#cartonGanador[@]} #Esto solo ve si hay bingo, no controla linea
-if((carton>0))
+if [ $carton -gt 0 ]; then
 bingo=1
 for((l=0;l<carton;l++))
 do
@@ -120,3 +121,4 @@ echo ${cartonGanador[$l]}
 done
 fi
 done	#while del bingo
+exit 0
