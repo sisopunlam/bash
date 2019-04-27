@@ -1,5 +1,38 @@
 #!/bin/bash
 
+
+#-----------------------------------------------------------------------#
+# Nombre del Script: Ejercicio3.sh					#
+# Trabajo Práctico Nº1							#
+# Integrantes:								#
+#-Amato, Luciano			DNI:  	40.378.763		#
+#-Pompeo, Nicolas Ruben			DNI:	37.276.705		#
+#-Annacondia, Federico Agustin		DNI:	38.435.945		#
+#-Del Greco, Juan Pablo			DNI:	39.097.812		#
+# Entrega 29/04/2019							#
+#-----------------------------------------------------------------------#
+
+sintaxis(){	
+    echo ""
+	echo "Ejercicio 3 - Versión 1"
+	echo ""
+	echo "Uso: ./Ejercicio3.sh  ruta/archivo  --> En la ejecucion mandar el archivo prueba de los cartones de bingo"
+	echo "Ejemplo: ./Ej.sh ./Documentos/Bingo.txt"
+	echo ""
+	echo "En este ejercicio se generaran numeros al azar hasta que uno de los cartones en el archivo haga bingo"
+	echo ""
+	
+}
+
+#Valida que se haya pedido la ayuda para ejecutar el script
+
+	if [[ $1 == "-?" || $1 == "-h" || $1 == "-help" ]]
+	then
+		sintaxis
+		exit 1;
+	fi
+
+
 generar_numero ()
 {
    local number
