@@ -141,6 +141,7 @@ while [ $j -lt $($aux2+16) ]; do
 				cartonGanador[$k]=$nroCarton
 				let "k+=1"
 			fi
+			done
 			let "carton+=1"
 			esBingo=0
 	done
