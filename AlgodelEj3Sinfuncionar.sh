@@ -111,13 +111,14 @@ i=16							#Me va a contar los -1 para saber si es bingo
 while [ $carton -le $cantCartones ] ; do
 aux=$i
 
-while [ $i -lt $($aux+16) ]; do
+while [ $i -lt $aux ]; do
 			nroCarton=${VARIABLE[$I]}
 			let"i+=1"
 			if [ $bolilla -eq ${VARIABLE[$I]} ]; then
 				let "VARIABLE[$i]=-1"
 				fi
 let"i+=1"
+let"aux+=16"
 					done
 
 			let "carton+=1"
@@ -129,7 +130,7 @@ k=0
 esBingo=0
 while [ $carton -le $cantCartones ] ; do
 
-while [ $j -lt $($aux2+16) ]; do
+while [ $j -lt $aux2 ]; do
 			nroCarton=${VARIABLE[$j]}
 			let"j+=1"
 				if [ ${VARIABLE[$j]} -eq -1]; then
@@ -141,12 +142,16 @@ while [ $j -lt $($aux2+16) ]; do
 				cartonGanador[$k]=$nroCarton
 				let "k+=1"
 			fi
+		let"aux2+=16"
 			done
 			let "carton+=1"
 			esBingo=0
-	done
+
+done
 carton=${#cartonGanador[@]} #Esto solo ve si hay bingo, no controla linea
-if [ $carton -gt 0 ]; then
+if [ $carton -eq 0 ]; then
+exit
+else
 bingo=1
 for((l=0;l<carton;l++))
 do
@@ -154,5 +159,5 @@ echo "Carton Ganador"
 echo ${cartonGanador[$l]}
 done
 fi
-done	#while del bingo
-exit 0
+done
+exit
