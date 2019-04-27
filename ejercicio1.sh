@@ -1,4 +1,17 @@
 #!/bin/bash
+
+#-----------------------------------------------------------------------#
+# Nombre del Script: Ejercicio3.sh					#
+# Trabajo Práctico Nº1							#
+# Integrantes:								#
+#-Amato, Luciano			DNI:  	40.378.763		#
+#-Pompeo, Nicolas Ruben			DNI:	37.276.705		#
+#-Annacondia, Federico Agustin		DNI:	38.435.945		#
+#-Del Greco, Juan Pablo			DNI:	39.097.812		#
+# Entrega 29/04/2019							#
+#-----------------------------------------------------------------------#
+
+
 #Este 'if' comprueba que el script recibe 2 argumentos, de otra manera, no se ejecuta
 if [ $# != 2 ]; then
   echo "El Script necesita 2 argumentos.
