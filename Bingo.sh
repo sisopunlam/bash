@@ -59,117 +59,90 @@ fi
 
 IFS=':' read -r -a array <<< $PATH
 
-MIN=0		  	# Minimo numero
-MAX=99    		# Maximo numero
-COLS=15     	#Columnas para hacer bingo
+#!/bin/bash
 
-declare -a Numeros
-inicializar_Numeros (){
-   local indice=0
-   until [ "$indice" -gt $MAX ]
-   do
-     Numeros[indice]=0
-     ((indice++))
-   done
+# validar parametros
 
-   Numeros[0]=1   
+comprobarCarton ()
+{
+	ale=$1
+	if [ $ale -ge "0" ] && [ $ale -le "9" ]
+	then
+		ale="0$ale"
+	fi
+	echo "Este es el numero sorteado: $ale"
+	for carton in "${!cartones[@]}"
+	do
+		lineas=${cartones[$carton]}
+		line1=${lineas%%|*}
+		aux=${lineas#*|}
+		line2=${aux%%|*}
+		line3=${lineas##*|}
+		echo "linea 1: $line1 ---- linea 2: $line2 ---- linea 3: $line3"
+		line1=$(echo $line1 | sed 's/'$ale'//')
+		line2=$(echo $line2 | sed 's/'$ale'//')
+		line3=$(echo $line3 | sed 's/'$ale'//')
+		
+		aux1=$(echo $line1|tr -d '[[:space:]]')
+		echo "numeros que qdan en linea 1: $aux1"
+		if [ -z $aux1 ]
+		then
+			echo "carton numero $carton completo la linea 1"
+		fi
+		aux2=$(echo $line2|tr -d '[[:space:]]')
+		echo "numeros que qdan en linea 2: $aux2"
+		if [ -z $aux2 ]
+		then
+			echo "carton numero $carton completo la linea 2"
+		fi
+		aux3=$(echo $line3|tr -d '[[:space:]]')
+		echo "numeros que qdan en linea 3: $aux3"
+		if [ -z $aux3 ]
+		then
+			echo "carton numero $carton completo la linea 3"
+		fi
+		if [ -z $aux1 ] && [ -z $aux2 ] && [ -z $aux3 ]
+		then
+			echo "el carton numero $carton ha gritado BINGO!!!"
+			exit 1
+		fi
+		cartones[$carton]="$line1|$line2|$line3"
+	done
+
 }
+
 generar_numero ()
 {
-   local n1
-   while [ 1 ]
-   do
-     let "n1 = $(expr $RANDOM % $MAX)"
-     if [ ${Numeros[n1]} -eq 0 ]    
-     then
-       let "Numeros[n1]+=1"     
-       break  
-     fi   
-   done
-
-   return $n1
+	local number
+	while [ 1 ]
+	do
+		number=$(($RANDOM%100))
+		if [ ${Numbers[number]} -eq 0 ]    
+		then
+			let "Numbers[number]+=1"         
+			break                       
+		fi 
+	done
+	comprobarCarton $number
 }
-#Anulamos CTRL+C
-trap ' ' INT
-declare -a VARIABLE
-OLDIFS=$IFS   # Valor original del IFS
-A=-1          # Variable para moverse por el array
-texto=$1
-IFS=$'\n\t'
-for LINEA in $(cat $1) ; do
-  IFS='\t'  # Caracter separador
-  for VALOR in $LINEA ; do
-    let A=$A+1
-    VARIABLE[$A]=${VALOR}
-  done
-  IFS=$'\n\t'
-done
-IFS=$OLDIFS 
-cantCartones=${#VARIABLE[@]}
-cantPosiciones=${#VARIABLE[@]}
-let "cantCartones/=16"
-let "cantCartones-=1" 
-echo;echo
-echo "Cantidad de Cartones En juego:"
-echo $cantCartones
-#-----------------------------------
-RANDOM=$$  
-inicializar_Numeros 
-carton=0
-nroCarton=0
-bingo=0
-while [[ "$bingo" != 1 ]]
+
+IFS="	"
+while read cod n1 n2 n3 n4 n5 n6 n7 n8 n9 n10 n11 n12 n13 n14 n15
 do
-   
-  read -s -n1 -p "Ingresar letra para generar numero" letra
-  echo
-
-generar_numero; nuevoNumero=$?
-echo $nuevoNumero
-
-j=16					#Me va a contar los -1 para saber si es bingo
-for((i=0;i<=cantPosiciones;i++))
+	echo "todos los cartones : $cod $n1	$n2	$n3	$n4	$n5|$n6	$n7	$n8	$n9	$n10|$n11	$n12	$n13	$n14	$n15"
+	cartones[$cod]+="$n1	$n2	$n3	$n4	$n5|$n6	$n7	$n8	$n9	$n10|$n11	$n12	$n13	$n14	$n15"
+done < "$1"
+for i in {0..99}
 do
-			if [[ "$nuevoNumero" == ${VARIABLE[$i]} ]]; then
-				VARIABLE[i]=-1
-				fi
+	Numbers[$i]+=0
 done
 
-aux2=$j
-carton=0
-cartonGanador=()
-k=0
-esBingo=0
+#trap "generar_numero" SIGUSR1
+#trap "" SIGINT
 
-while [[ "$carton" < "$cantCartones" ]] ; do
-							posicionCarton=0
-							#for i in {(0+j)..64}	#Hardcode
-							let "posicionCarton+=j"
-							let "posicionCarton*=(carton+1)"
-							nroCarton=${VARIABLE[$posicionCarton]}
-for((i=posicionCarton;i<(posicionCarton+16);i++))
-do
-			if [[ ${VARIABLE[$i]} == -1 ]]; then
-					let "esBingo+=1"
-				fi
-done
-if [[ "$esBingo" == 15 ]];then
-bingo=1
-cartonGanador+=($nroCarton)
-fi
-			let "carton+=1"
-			esBingo=0
+generar_numero
 
-done
-done
-#--------------------------
-
-
-echo "BINGO"
-echo "${cartonGanador[$l]} - CARTON GANADOR"
-
-
-echo; echo
-echo
-
-exit 0
+#while [ 1 ]
+#do
+	#sleep 5
+#done
