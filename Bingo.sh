@@ -5,11 +5,11 @@
 # Nombre del Script: Ejercicio3.sh								#
 # Trabajo Práctico Nº1											#
 # Integrantes:														#
-#-Amato, Luciano						DNI:  	40.378.763		#
+#-Amato, Luciano			DNI:  	40.378.763		#
 #-Pompeo, Nicolas Ruben			DNI:	37.276.705		#
 #-Annacondia, Federico Agustin		DNI:	38.435.945		#
-#-Del Greco, Juan Pablo				DNI:	39.097.812		#
-#Meza, Julian							DNI:			#
+#-Del Greco, Juan Pablo			DNI:	39.097.812		#
+#Meza, Julian				DNI:			#
 # Entrega 29/04/2019											#
 #-----------------------------------------------------------------------#
 
@@ -28,8 +28,6 @@ sintaxis(){
 }
 CANT_PARAMS=$# 
 PARAM=$1
-USER=`whoami`
-
 #Se valida que la cantidad de parámetros no se mayor a 1
 if [[ $CANT_PARAMS -gt 1 ]]
 	then
@@ -39,8 +37,8 @@ fi
 
 #Si existe algún parámetro
 if [[ $PARAM ]]; then
-	#Ayuda
-	if [[ $PARAM == "-?" || $PARAM == "-h" || $PARAM == "-help" ]]
+#Valida que se haya pedido la ayuda para ejecutar el script
+	if [[ $PARAM == "-?" || $PARAM == "-h" || $PARAM == "-help" ]] 
 	then
 		sintaxis
 		exit 1
@@ -61,18 +59,11 @@ fi
 
 IFS=':' read -r -a array <<< $PATH
 
-#Valida que se haya pedido la ayuda para ejecutar el script
-
-
-
-
-
 MIN=0		  	# Minimo numero
 MAX=99    		# Maximo numero
 COLS=15     	#Columnas para hacer bingo
 
 declare -a Numeros
-
 inicializar_Numeros (){
    local indice=0
    until [ "$indice" -gt $MAX ]
@@ -83,8 +74,6 @@ inicializar_Numeros (){
 
    Numeros[0]=1   
 }
-
-
 generar_numero ()
 {
    local n1
@@ -100,7 +89,8 @@ generar_numero ()
 
    return $n1
 }
-
+#Anulamos CTRL+C
+trap ' ' INT
 declare -a VARIABLE
 OLDIFS=$IFS   # Valor original del IFS
 A=-1          # Variable para moverse por el array
