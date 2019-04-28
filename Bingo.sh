@@ -128,7 +128,7 @@ generar_numero; nuevoNumero=$?
 echo $nuevoNumero
 
 j=16					#Me va a contar los -1 para saber si es bingo
-for i in {0..64}	#Hardcode
+for((i=0;i<=cantPosiciones;i++))
 do
 			if [[ "$nuevoNumero" == ${VARIABLE[$i]} ]]; then
 				VARIABLE[i]=-1
