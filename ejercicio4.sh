@@ -36,7 +36,7 @@ END
  
 # Si me pasa un solo parametro, este deberia ser -h
  
-if [  "$1" == "-h"  ] || [ "$1" == "-help" ] || [ "$1" == "-?" ]; then
+if [ $# == 0 ] || [  "$1" == "-h"  ] || [ "$1" == "-help" ] || [ "$1" == "-?" ]; then
         ayuda
         exit
 fi
@@ -90,6 +90,6 @@ coincidencia() {
 for i in $(ls $directorio)
 do
         if ! [ -d $directorio"/"$i ];then
-                coincidencia $base $directorio"/"$i $minimo
+                coincidencia $base $directorio"/"$i
         fi
 done
