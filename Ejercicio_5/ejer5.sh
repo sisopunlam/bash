@@ -1,8 +1,8 @@
 #!/bin/bash
 ###############################################
-#Nombre del archivo: ejer3.sh
+#Nombre del archivo: ejer5.sh
 #Trabajo pr�ctico: 1
-#Ejercicio: 3
+#Ejercicio: 5
 #
 #Integrantes del grupo:
 #
@@ -33,7 +33,12 @@ Uso:
    ./ejer5.sh -h | -? | -help
 
    Para una correcta ejecución se deben enviar la ruta del directorio y comprecion
-   ./ejer5.sh [directorio a analizar]
+   ./ejer5.sh [directorio a analizar] [Tipo de compresion]
+   ./ejer5.sh -t | [-x]
+
+Compresiones soportadas:
+---
+     rar, zip, tar, bzip2
 
 Ejemplos:
 --------

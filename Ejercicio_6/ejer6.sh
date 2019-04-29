@@ -1,8 +1,8 @@
 #!/bin/bash
 ###############################################
-#Nombre del archivo: ejer3.sh
+#Nombre del archivo: ejer6.sh
 #Trabajo pr�ctico: 1
-#Ejercicio: 3
+#Ejercicio: 6
 #
 #Integrantes del grupo:
 #
@@ -27,7 +27,7 @@ Descripcion:
 
     Este Script se encarga de renombre masivamente los archivos de un directorio,teniendo un valor/caracters a
 	reempblazar en el nombre de los archivos.
-    Tiene 3 parámetros....
+
 
 Uso:
 ---
@@ -40,7 +40,7 @@ Uso:
 Ejemplos:
 --------
    ./ejer6.sh ./DirectorioA xx 20190328
-   /home/julian/Escritorio/windows/Nueva carpeta/bash/lote
+   
 END
 }
 
