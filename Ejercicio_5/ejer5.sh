@@ -106,7 +106,10 @@ esac
 
 
 #ARCHOVO LOG Y DELETE
-tree -f $1>$1_$TIME.log
+#tree -f $1>$1_$TIME.log
+pwd=$(pwd)
+find $1 -print | sed -e "s;$pwd;\.;g;s;[^/]*\/;|__;g;s;__|; |;g" >$1_$TIME.log
+
 echo "$1_$TIME.$ext" >> .$1.log
 echo "$1_$TIME.log" >> .$1.log
 cant=$(wc .$1.log -l | awk '{ print $1 }')
